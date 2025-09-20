@@ -5,6 +5,9 @@ import { ConfigModule } from '@nestjs/config';
 import { SequelizeModule } from '@nestjs/sequelize';
 import { UserModule } from './user';
 import { AuthModule } from './auth/auth.module';
+import { ScheduleModule } from './schedule/schedule.module';
+import { PlaceModule } from './place/place.module';
+import { TrainModule } from './train/train.module';
 
 @Module({
   imports: [
@@ -16,6 +19,9 @@ import { AuthModule } from './auth/auth.module';
     }),
     UserModule,
     AuthModule,
+    ScheduleModule,
+    PlaceModule,
+    TrainModule,
   ],
   controllers: [AppController],
   providers: [AppService],

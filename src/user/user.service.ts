@@ -12,6 +12,21 @@ import { UserData } from './user.types';
 export class UserService {
   constructor(private userRepository: UserRepository) {}
 
+  async getOneById(id: string) {
+    const user = await this.userRepository.getOneById(id);
+
+    if (!user) {
+      throw new NotFoundException(USER_NOT_FOUND);
+    }
+
+    const userData: UserData = {
+      id,
+      username: user.username,
+    };
+
+    return userData;
+  }
+
   async getOneByUsername(username: string) {
     const existingUser = await this.userRepository.getOneByUsername(username);
 

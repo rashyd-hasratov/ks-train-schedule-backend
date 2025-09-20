@@ -9,6 +9,10 @@ export class UserRepository {
     private userModel: typeof User,
   ) {}
 
+  getOneById(id: string) {
+    return this.userModel.findOne({ where: { id } });
+  }
+
   getOneByUsername(username: string) {
     return this.userModel.findOne({ where: { username } });
   }
