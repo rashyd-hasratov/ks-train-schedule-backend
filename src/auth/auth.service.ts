@@ -19,7 +19,7 @@ export class AuthService {
   async signUp(signUpDto: SignUpDto) {
     const { username, password } = signUpDto;
     const userData = await this.userService.createOne(username, password);
-    const accessToken = this.signToken(userData);
+    const accessToken = await this.signToken(userData);
     const payload: AuthResponsePayload = { accessToken };
 
     return payload;
@@ -41,7 +41,7 @@ export class AuthService {
         id,
         username,
       };
-      const accessToken = this.signToken(userData);
+      const accessToken = await this.signToken(userData);
       const payload: AuthResponsePayload = { accessToken };
 
       return payload;
@@ -52,19 +52,17 @@ export class AuthService {
 
   async signToken(userData: UserData) {
     const secret = this.configService.get<string>('JWT_SECRET');
-    const accessToken = await this.jwtService.signAsync(userData, {
+
+    return this.jwtService.signAsync(userData, {
       secret,
     });
-
-    return accessToken;
   }
 
   async verifyToken(token: string) {
     const secret = this.configService.get<string>('JWT_SECRET');
-    const userData = await this.jwtService.verifyAsync<UserData>(token, {
+
+    return this.jwtService.verifyAsync<UserData>(token, {
       secret,
     });
-
-    return userData;
   }
 }
